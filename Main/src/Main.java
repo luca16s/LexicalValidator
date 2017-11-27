@@ -6,10 +6,16 @@ import static java.lang.System.*;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String a = scanner.nextLine();
-        out.println(a);
+
+        String mathExpression = scanner.nextLine();
+
         Stack s = inicPilha();
-        push(s, 'c');
+
+        for (int i = 0; i < mathExpression.length(); i++) {
+            push(s, mathExpression.substring(i, i + 1));
+        }
+
+
         out.println(s);
     }
 
@@ -17,7 +23,7 @@ public class Main {
         return new Stack();
     }
 
-    private static void push(Stack s, char a) {
+    private static void push(Stack s, String a) {
         s.push(a);
     }
 
