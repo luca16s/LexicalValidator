@@ -9,7 +9,7 @@ public class Main {
 
         boolean valido = true;
         String mathExpression = scanner.nextLine();
-        Object auxVariable = "";
+        String auxVariable = "";
         Stack<String> s = inicPilha();
 
         for (int i = 0; i < mathExpression.length(); i++) {
@@ -23,7 +23,10 @@ public class Main {
                     || mathExpression.substring(i, i + 1).equals("}")) {
                 push(s, mathExpression.substring(i, i + 1));
             }
+            out.println(s);
+        }
 
+        for (int i = 0; i < s.size(); i++) {
             if (mathExpression.substring(i, i + 1).equals(")")
                     || mathExpression.substring(i, i + 1).equals("]")
                     || mathExpression.substring(i, i + 1).equals("}")) {
@@ -31,14 +34,29 @@ public class Main {
                     valido = false;
                 } else {
                     auxVariable = pop(s);
-                    if (auxVariable.equals(mathExpression.substring(i, i))) {
-                        valido = false;
+                    String c = s.peek();
+                    switch (auxVariable) {
+                        case "}":
+                            if (c != "{") {
+                                valido = false;
+                            }
+                            break;
+                        case ")":
+                            if (c != "(") {
+                                valido = false;
+                            }
+                            break;
+                        case "]":
+                            if (c != "[") {
+                                valido = false;
+                            }
+                            break;
                     }
                 }
             }
         }
 
-        if (!pilhaVazia(s)) {
+        if (pilhaVazia(s) == true) {
             valido = false;
         }
         if (valido) {
