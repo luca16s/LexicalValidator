@@ -22,6 +22,6 @@ public class Main {
     }
 
     public void pop(Stack s) {
-
+        s.pop();
     }
 }
