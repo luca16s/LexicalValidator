@@ -9,7 +9,7 @@ public class Main {
 
         boolean valido = true;
         String mathExpression = scanner.nextLine();
-        String auxVariable = "";
+        int auxVariable = 0;
         Stack<String> s = inicPilha();
 
         for (int i = 0; i < mathExpression.length(); i++) {
@@ -23,40 +23,35 @@ public class Main {
                     || mathExpression.substring(i, i + 1).equals("}")) {
                 push(s, mathExpression.substring(i, i + 1));
             }
-            out.println(s);
+
         }
 
         for (int i = 0; i < s.size(); i++) {
-            if (mathExpression.substring(i, i + 1).equals(")")
-                    || mathExpression.substring(i, i + 1).equals("]")
-                    || mathExpression.substring(i, i + 1).equals("}")) {
+            if (s.peek().equals(")")
+                    || s.peek().equals("]")
+                    || s.peek().equals("}")) {
                 if (pilhaVazia(s)) {
                     valido = false;
+                    pop(s);
                 } else {
-                    auxVariable = pop(s);
-                    String c = s.peek();
-                    switch (auxVariable) {
-                        case "}":
-                            if (c != "{") {
-                                valido = false;
-                            }
-                            break;
-                        case ")":
-                            if (c != "(") {
-                                valido = false;
-                            }
-                            break;
-                        case "]":
-                            if (c != "[") {
-                                valido = false;
-                            }
-                            break;
+                    for (String item : s) {
+                        if (item.equals("{") || item.equals("}"))
+                            auxVariable++;
+                        if (item.equals("(") || item.equals(")"))
+                            auxVariable++;
+                        if (item.equals("[") || item.equals("]"))
+                            auxVariable++;
+                    }
+                    if (auxVariable % 2 != 0) {
+                        valido = false;
                     }
                 }
+            } else {
+                valido = false;
             }
         }
 
-        if (pilhaVazia(s) == true) {
+        if (pilhaVazia(s)) {
             valido = false;
         }
         if (valido) {
@@ -66,20 +61,19 @@ public class Main {
         }
     }
 
-    private static boolean pilhaVazia(Stack s) {
+    private static boolean pilhaVazia(Stack<String> s) {
         return s.empty();
     }
 
-    private static Stack inicPilha() {
-        return new Stack<String>();
+    private static Stack<String> inicPilha() {
+        return new Stack<>();
     }
 
-    private static void push(Stack s, String a) {
+    private static void push(Stack<String> s, String a) {
         s.push(a);
     }
 
-    public static String pop(Stack s) {
-        String local = (String) s.pop();
-        return local;
+    private static void pop(Stack<String> s) {
+        s.pop();
     }
 }
