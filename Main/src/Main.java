@@ -47,7 +47,7 @@ public class Main {
                     if (item.equals("]"))
                         colchetesRight++;
                 }
-                if (chavesLeft != chavesRight && parentesesLeft != parentesesRight && colchetesLeft != colchetesRight)
+                if (chavesLeft != chavesRight || parentesesLeft != parentesesRight || colchetesLeft != colchetesRight)
                         valido = false;
             }
         } else {
