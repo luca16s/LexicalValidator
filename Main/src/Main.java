@@ -9,7 +9,7 @@ public class Main {
 
         boolean valido = true;
         String mathExpression = scanner.nextLine();
-        int auxVariable = 0;
+        int colchetes = 0, chaves = 0, parenteses = 0;
         Stack<String> s = inicPilha();
 
         for (int i = 0; i < mathExpression.length(); i++) {
@@ -26,29 +26,27 @@ public class Main {
 
         }
 
-        for (int i = 0; i < s.size(); i++) {
-            if (s.peek().equals(")")
-                    || s.peek().equals("]")
-                    || s.peek().equals("}")) {
-                if (pilhaVazia(s)) {
-                    valido = false;
-                    pop(s);
-                } else {
-                    for (String item : s) {
-                        if (item.equals("{") || item.equals("}"))
-                            auxVariable++;
-                        if (item.equals("(") || item.equals(")"))
-                            auxVariable++;
-                        if (item.equals("[") || item.equals("]"))
-                            auxVariable++;
-                    }
-                    if (auxVariable % 2 != 0) {
-                        valido = false;
-                    }
-                }
-            } else {
+        if (s.peek().equals(")")
+                || s.peek().equals("]")
+                || s.peek().equals("}")) {
+            if (pilhaVazia(s)) {
                 valido = false;
+                pop(s);
+            } else {
+                for (String item : s) {
+                    if (item.equals("{") || item.equals("}"))
+                        chaves++;
+                    if (item.equals("(") || item.equals(")"))
+                        parenteses++;
+                    if (item.equals("[") || item.equals("]"))
+                        colchetes++;
+                }
+                if (chaves % 2 == 0 || parenteses % 2 == 0 || colchetes % 2 == 0) {
+                    valido = false;
+                }
             }
+        } else {
+            valido = false;
         }
 
         if (pilhaVazia(s)) {
