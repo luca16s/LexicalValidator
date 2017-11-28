@@ -9,7 +9,8 @@ public class Main {
 
         boolean valido = true;
         String mathExpression = scanner.nextLine();
-        int colchetes = 0, chaves = 0, parenteses = 0;
+        int colchetesLeft = 0, chavesLeft = 0, parentesesLeft = 0;
+        int colchetesRight = 0, chavesRight = 0, parentesesRight = 0;
         Stack<String> s = inicPilha();
 
         for (int i = 0; i < mathExpression.length(); i++) {
@@ -33,18 +34,21 @@ public class Main {
                 valido = false;
             } else {
                 for (String item : s) {
-                    if (item.equals("{") || item.equals("}"))
-                        chaves++;
-                    if (item.equals("(") || item.equals(")"))
-                        parenteses++;
-                    if (item.equals("[") || item.equals("]"))
-                        colchetes++;
+                    if (item.equals("{"))
+                        chavesLeft++;
+                    if (item.equals("("))
+                        parentesesLeft++;
+                    if (item.equals("["))
+                        colchetesLeft++;
+                    if (item.equals("}"))
+                        chavesRight++;
+                    if (item.equals(")"))
+                        parentesesRight++;
+                    if (item.equals("]"))
+                        colchetesRight++;
                 }
-                if (chaves >= 0 && parenteses >= 0 && colchetes >= 0) {
-                    if (chaves % 2 != 0 || parenteses % 2 != 0 || colchetes % 2 != 0) {
+                if (chavesLeft == chavesRight && parentesesLeft == parentesesRight && colchetesLeft == colchetesRight)
                         valido = false;
-                    }
-                }
             }
         } else {
             valido = false;
