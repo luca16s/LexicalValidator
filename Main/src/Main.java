@@ -31,7 +31,6 @@ public class Main {
                 || s.peek().equals("}")) {
             if (pilhaVazia(s)) {
                 valido = false;
-                pop(s);
             } else {
                 for (String item : s) {
                     if (item.equals("{") || item.equals("}"))
@@ -41,8 +40,10 @@ public class Main {
                     if (item.equals("[") || item.equals("]"))
                         colchetes++;
                 }
-                if (chaves % 2 == 0 || parenteses % 2 == 0 || colchetes % 2 == 0) {
-                    valido = false;
+                if (chaves != 0 && parenteses != 0 && colchetes != 0) {
+                    if (chaves % 2 != 0 || parenteses % 2 != 0 || colchetes % 2 != 0) {
+                        valido = false;
+                    }
                 }
             }
         } else {
